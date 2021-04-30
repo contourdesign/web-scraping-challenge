@@ -18,7 +18,7 @@ def scrape():
     final_data["mars_paragraph"] = output[1]
     final_data["mars_image"] = marsImage()
     final_data["mars_facts"] = marsFacts()
-    final_data["mars_hemisphere"] = marsHem()
+    # final_data["mars_hemisphere"] = marsHem()
 
     # return output dictionary
     return final_data
@@ -53,9 +53,10 @@ def marsFacts():
     # mars_data = pd.read_html(facts_url)
     # mars_data = pd.DataFrame(mars_data[0])
     # mars_data.columns = ["Description", "Value"]
-    # mars_data = mars_data.set_index("Description")
-    # mars_facts = mars_data.to_html(index = True, header =True)
+    # # mars_data = mars_data.set_index("Description")
+    # mars_facts = mars_data.to_html(index = False, header = False)
     # return mars_facts
+
 
     facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
