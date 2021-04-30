@@ -2,6 +2,7 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
+import requests
 
 # init browser
 executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -18,7 +19,7 @@ def scrape():
     final_data["mars_paragraph"] = output[1]
     final_data["mars_image"] = marsImage()
     final_data["mars_facts"] = marsFacts()
-    # final_data["mars_hemisphere"] = marsHem()
+    final_data["mars_hemisphere"] = marsHem()
 
     # return output dictionary
     return final_data
@@ -48,22 +49,24 @@ def marsImage():
 # Mars factoids
 def marsFacts():
     import pandas as pd
-    # facts_url = "https://galaxyfacts-mars.com/"
-    # browser.visit(facts_url)
-    # mars_data = pd.read_html(facts_url)
-    # mars_data = pd.DataFrame(mars_data[0])
-    # mars_data.columns = ["Description", "Value"]
-    # # mars_data = mars_data.set_index("Description")
-    # mars_facts = mars_data.to_html(index = False, header = False)
-    # return mars_facts
-
-
     facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
     mars_data = pd.read_html(facts_url)
-    mars_data = pd.DataFrame(mars_data[0])
-    mars_facts = mars_data.to_html(header=False, index=False)
+    mars_data = pd.DataFrame(mars_data[1])
+    mars_data.columns = ["Description", "Value"]
+    mars_data = mars_data.set_index("Description")
+    mars_facts = mars_data.to_html(index = False, header = False)
     return mars_facts
+
+
+    # facts_url = "https://galaxyfacts-mars.com/"
+    # browser.visit(facts_url)
+    # mars_data = pd.read_html(facts_url)
+    # mars_data = pd.DataFrame(mars_data[1])
+    # mars_data.columns = ["Description", "Value"]
+    # mars_data = mars_data.set_index("Description")
+    # mars_facts = mars_data.to_html(header=False, index=False)
+    # return mars_facts
 
 
 # Hemispheres
@@ -94,5 +97,7 @@ def marsHem():
         mars_hemisphere.append(dictionary)
 
     return mars_hemisphere
+
+
 
     
