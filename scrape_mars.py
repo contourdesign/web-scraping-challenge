@@ -32,7 +32,7 @@ def marsNews():
     soup = BeautifulSoup(html, "html.parser")
     article = soup.find("div", class_='list_text')
     news_title = article.find("div", class_="content_title").text
-    news_p = article.find("div", class_ ="article_teaser_body").text
+    news_p = article.find("div", class_="article_teaser_body").text
     output = [news_title, news_p]
     return output
 
@@ -55,7 +55,7 @@ def marsFacts():
     mars_data = pd.DataFrame(mars_data[1])
     mars_data.columns = ["Description", "Value"]
     mars_data = mars_data.set_index("Description")
-    mars_facts = mars_data.to_html(index = False, header = False)
+    mars_facts = mars_data.to_html(index = True, header = True)
     return mars_facts
 
 
@@ -79,8 +79,8 @@ def marsHem():
     mars_hemisphere = []
 
     # soupify
-    products = soup.find("div", class_ = "result-list" )
-    hemispheres = products.find_all("div", class_="item")
+    products = soup.find("div", class_= "result-list")
+    hemispheres = products.find_all("div", class_="description")
 
     # for loop to get hemispheres
     for hemisphere in hemispheres:
@@ -91,7 +91,7 @@ def marsHem():
         browser.visit(image_link)
         html = browser.html
         soup=BeautifulSoup(html, "html.parser")
-        downloads = soup.find("div", class_="downloads")
+        downloads = soup.find("div", class_="description")
         image_url = downloads.find("a")["href"]
         dictionary = {"title": title, "img_url": image_url}
         mars_hemisphere.append(dictionary)
