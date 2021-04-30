@@ -7,7 +7,7 @@ executable_path = {'executable_path': ChromeDriverManager().install()}
 browser = Browser("chrome", **executable_path, headless=False)
 
 
-# Scrape, create dictionary
+# Scrape initiated, create dictionary
 def scrape():
     final_data = {}
     output = marsNews()
@@ -21,9 +21,9 @@ def scrape():
     # return output dictionary
     return final_data
 
-# Mars News
+# Mars News scrape
 def marsNews():
-    news_url = "https://mars.nasa.gov/news/"
+    news_url = "https://redplanetscience.com/"
     browser.visit(news_url)
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
@@ -33,20 +33,20 @@ def marsNews():
     output = [news_title, news_p]
     return output
 
-# Mars featured image
+# Mars featured image scrape
 def marsImage():
-    image_url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
+    image_url = "https://spaceimages-mars.com/"
     browser.visit(image_url)
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
-    image = soup.find("img", class_="thumb")["src"]
-    featured_image_url = "https://www.jpl.nasa.gov" + image
+    image = soup.find("img", class_="headerimage")["src"]
+    featured_image_url = "https://spaceimages-mars.com/" + image
     return featured_image_url
 
 # Mars factoids
 def marsFacts():
     import pandas as pd
-    facts_url = "https://space-facts.com/mars/"
+    facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
     mars_data = pd.read_html(facts_url)
     mars_data = pd.DataFrame(mars_data[0])
@@ -59,7 +59,7 @@ def marsFacts():
 # Hemispheres
 def marsHem():
     import time 
-    hemispheres_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
+    hemispheres_url = "https://marshemispheres.com/"
     browser.visit(hemispheres_url)
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
@@ -74,7 +74,7 @@ def marsHem():
         title = hemisphere.find("h3").text
         title = title.replace("Enhanced", "")
         end_link = hemisphere.find("a")["href"]
-        image_link = "https://astrogeology.usgs.gov/" + end_link    
+        image_link = "https://marshemispheres.com/" + end_link    
         browser.visit(image_link)
         html = browser.html
         soup=BeautifulSoup(html, "html.parser")
