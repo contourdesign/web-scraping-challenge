@@ -48,13 +48,20 @@ def marsImage():
 # Mars factoids
 def marsFacts():
     import pandas as pd
+    # facts_url = "https://galaxyfacts-mars.com/"
+    # browser.visit(facts_url)
+    # mars_data = pd.read_html(facts_url)
+    # mars_data = pd.DataFrame(mars_data[0])
+    # mars_data.columns = ["Description", "Value"]
+    # mars_data = mars_data.set_index("Description")
+    # mars_facts = mars_data.to_html(index = True, header =True)
+    # return mars_facts
+
     facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
     mars_data = pd.read_html(facts_url)
     mars_data = pd.DataFrame(mars_data[0])
-    mars_data.columns = ["Description", "Value"]
-    mars_data = mars_data.set_index("Description")
-    mars_facts = mars_data.to_html(index = True, header =True)
+    mars_facts = mars_data.to_html(header=False, index=False)
     return mars_facts
 
 
@@ -84,4 +91,7 @@ def marsHem():
         image_url = downloads.find("a")["href"]
         dictionary = {"title": title, "img_url": image_url}
         mars_hemisphere.append(dictionary)
+
     return mars_hemisphere
+
+    
