@@ -14,7 +14,7 @@
     <div class="container">
 
         <div class="jumbotron text-center">
-          <h1>Mission to Mars err something...</h1>
+          <h1>Mission to Mars</h1>
           <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape EPIC Data</a></p>
         </div>
     
@@ -45,7 +45,7 @@
                 <h3>Mars Hemispheres</h3>
 
                 {% for hemisphere in mars.mars_hemisphere %}
-                    <div class = "col-md-6">
+                    <div class = "col-md-3">
                         <div class = "thumbnail">
                             <img src = "{{hemisphere.img_url}}">
                                 <h3>{{hemisphere.title}}</h3>
