@@ -3,63 +3,68 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name ="viewport" content ="width=device-width", initial-scale=1.0">
+    <meta name ="viewport" content ="width=device-width", initial-scale=1.0>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mission to Mars</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+          background-color: rgb(190, 178, 206);
+        }
+      </style>
 </head>
 
 <body>
   
     <div class="container">
 
-        <div class="jumbotron text-center">
+        <div class="jumbotron text-center" style="color: rgb(255, 157, 250)">
           <h1>Mission to Mars</h1>
           <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape EPIC Data</a></p>
         </div>
     
-        <div class="row" id="mars-news">
+        <div class="row">
           <div class="col-md-12">
-              <h3>Latest Mars News</h3>
-                <h4>{{ mars.mars_news }}</h4>
+              <h3> - = - Latest Mars News - = - </h3>
+                <h5>{{ mars.mars_news }}</h5>
                     <p>{{ mars.mars_paragraph }}</p>
           </div>
         </div>
 
-        <div class ="row" id="mars-image">
-            <div class = "col-md-6">
+        <div class ="row">
+            <div class = "col-md-8">
                 <h3>Featured Mars Image</h3>
-                <img src = "{{mars.mars_image}}" alt ="Mars Image">
+                <img src = "{{mars.mars_image}}">
             </div>
-            <div class = "col-md-6">
+            <div class = "col-md-4">
                     <br>
                     <h4>Mars Factoids</h4>
-                    <p>{{ mars.mars_facts }}</p>
+                    <p>{{mars.mars_facts | safe}}</p>
+                    
                 </div>
         </div><br>
         
-        <div class ="row" id="mars-hemispheres">
+        <div class ="row">
             <div class = "col-md-12">
                 <h3>Mars Hemispheres</h3>
 
-                {% for hemisphere in mars.mars_hemisphere %}
+                    {% for hemisphere in mars.mars_hemisphere %}
                     <div class = "col-md-3">
                         <div class = "thumbnail">
                             <img src = "{{hemisphere.img_url}}">
-                                <h3>{{ hemisphere.title }}</h3>
+                            <br>{{hemisphere.img_url}}
+                                <h3>{{hemisphere.title}}</h3>
                             </div>
                         </div>
-                {% endfor %}
+                    {% endfor %}
                     </div>
 
-            
             </div>
         </div>
         </div>
 
         </div>
-
-
 
       </div>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

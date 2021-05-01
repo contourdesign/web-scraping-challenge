@@ -9,7 +9,7 @@ executable_path = {'executable_path': ChromeDriverManager().install()}
 browser = Browser("chrome", **executable_path, headless=False)
 
 
-# Scrape initiated, create dictionary
+# Scrape initiated, create dictionary and call functions
 def scrape():
 
     final_data = {}
@@ -44,6 +44,7 @@ def marsImage():
     soup = BeautifulSoup(html, "html.parser")
     image = soup.find("img", class_="headerimage")["src"]
     featured_image_url = "https://spaceimages-mars.com/" + image
+    print(featured_image_url)
     return featured_image_url
 
 # Mars factoids
@@ -52,21 +53,11 @@ def marsFacts():
     facts_url = "https://galaxyfacts-mars.com/"
     browser.visit(facts_url)
     mars_data = pd.read_html(facts_url)
-    mars_data = pd.DataFrame(mars_data[1])
-    mars_data.columns = ["Description", "Value"]
+    mars_data = pd.DataFrame(mars_data[0])
+    mars_data.columns = ["Description", "Mars", "Earth"]
     mars_data = mars_data.set_index("Description")
     mars_facts = mars_data.to_html(index = True, header = True)
     return mars_facts
-
-
-    # facts_url = "https://galaxyfacts-mars.com/"
-    # browser.visit(facts_url)
-    # mars_data = pd.read_html(facts_url)
-    # mars_data = pd.DataFrame(mars_data[1])
-    # mars_data.columns = ["Description", "Value"]
-    # mars_data = mars_data.set_index("Description")
-    # mars_facts = mars_data.to_html(header=False, index=False)
-    # return mars_facts
 
 
 # Hemispheres
@@ -82,20 +73,26 @@ def marsHem():
     products = soup.find("div", class_= "result-list")
     hemispheres = products.find_all("div", class_="description")
 
-    # for loop to get hemispheres
+    # for loop to get hemispheres pic info
     for hemisphere in hemispheres:
+
         title = hemisphere.find("h3").text
-        title = title.replace("Enhanced", "")
+        print(title)
+        
         end_link = hemisphere.find("a")["href"]
-        image_link = "https://marshemispheres.com/" + end_link    
+        image_link = "https://marshemispheres.com/" + end_link  
+
         browser.visit(image_link)
         html = browser.html
         soup=BeautifulSoup(html, "html.parser")
-        downloads = soup.find("div", class_="description")
-        image_url = downloads.find("a")["href"]
-        dictionary = {"title": title, "img_url": image_url}
+
+        img_url = "https://marshemispheres.com/" + soup.find('img', class_='wide-image').get('src')
+        print(img_url)
+
+        dictionary = dict({"title": title, "img_url": img_url})
         mars_hemisphere.append(dictionary)
 
+        
     return mars_hemisphere
 
 
